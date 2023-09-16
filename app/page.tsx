@@ -5,7 +5,8 @@ import ReactFlow, { Background, Controls,
   Connection, Node, Edge, EdgeChange, 
   NodeChange, addEdge, applyEdgeChanges, 
   applyNodeChanges, useReactFlow, useNodesState
-  , useEdgesState } from 'reactflow';
+  , useEdgesState, 
+  MiniMap} from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import EditorNode from '@/components/EditorNode';
@@ -54,6 +55,7 @@ export default function App() {
         selectionOnDrag={true}
         snapToGrid={true}
       >
+        <MiniMap />
         <Background />
         <Controls />
       </ReactFlow>

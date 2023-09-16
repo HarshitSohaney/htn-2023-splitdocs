@@ -2,9 +2,10 @@
 
 import { Editor } from 'novel';
 import { useState } from 'react';
-import { useReactFlow } from "reactflow";
+import { Handle, Position, useReactFlow } from "reactflow";
 
 import { DocumentDuplicateIcon, DocumentPlusIcon } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/20/solid';
 
 type EditorNodeProps = {
   data: {
@@ -15,6 +16,8 @@ type EditorNodeProps = {
 
 const EditorNode = ({ id, data}: EditorNodeProps) => {
 
+  console.log(id)
+
   const [tags, setTags] = useState<string[]>([
     'generational',
     'visionary',
@@ -23,12 +26,16 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
 
   const reactFlowInstance = useReactFlow();
 
-  const addNewNode = (id: string) => {
+  const generateBlock = () => {
+
+  }
+
+  const addNewNode = (id: string, text?: string) => {
     const nodes = reactFlowInstance.getNodes();
     const edges = reactFlowInstance.getEdges();
     
     const oldData = reactFlowInstance.getNode(id);
-    const newData = { ...oldData.data };
+    const newData = { ...oldData.data, text };
     const old_pos = oldData.position;
 
     console.log("old pos: ", old_pos);
@@ -98,12 +105,27 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
         </div>
       </div>
 
-      <div className="p-1 rounded-lg">
+      <div className="flex flex-col gap-2 p-1 rounded-lg">
         <span className='h-6 w-6 block'></span>
         <button onClick={() => addNewNode(id)}>
           <DocumentPlusIcon className="h-6 w-6" />
         </button>
+        <button onClick={() => addNewNode(id)}>
+          <SparklesIcon className="h-6 w-6" />
+        </button>
       </div>
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        id={`edge-${reactFlowInstance.getNodes().length-1}`}
+        isConnectable={true}
+      />
+      <Handle
+        type="target"
+        position={Position.Top}
+        id={`edge-${reactFlowInstance.getNodes().length-1}`}
+        isConnectable={true}
+      />
     </div>
   );
 }
