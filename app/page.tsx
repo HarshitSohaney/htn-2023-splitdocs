@@ -10,7 +10,6 @@ import 'reactflow/dist/style.css';
 
 import EditorNode from '@/components/EditorNode';
 
-
 const initialNodes = [
   { 
     id: 'node-1', 
@@ -53,6 +52,7 @@ export default function App() {
         nodeTypes={nodeTypes}
         panOnScroll={true}
         selectionOnDrag={true}
+        snapToGrid={true}
       >
         <Background />
         <Controls />

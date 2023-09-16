@@ -31,10 +31,40 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
     const newData = { ...oldData.data };
     const old_pos = oldData.position;
 
+    console.log("old pos: ", old_pos);
+
+    let adder_x = oldData?.width - oldData?.width/5;
+    let adder_y = oldData?.height + 100;
+
+    console.log("nodes: ", nodes);
+    for(let i = 0; i < edges.length; i++) { 
+      const edge = edges[i];
+      if(edge.source == id) {
+        while(true) {
+          console.log("edge: ", edge);
+          const target = reactFlowInstance.getNode(edge.target);
+
+          console.log("target: ", target);
+
+          if(target.position.x != old_pos.x-adder_x || target.position.y != old_pos.y+adder_y) {
+            break;
+          }
+          else if(target.position.x != old_pos.x+adder_x  || target.position.y != old_pos.y+adder_y) {
+            adder_x = -adder_x;
+            console.log("x: ", adder_x);
+            break;
+          }
+          
+          adder_x += 100;
+          adder_y += 200;
+        }
+      }
+    }
+    // add new node
     const newNode = {
         id: `node-${nodes.length + 1}`,
         type: 'editor',
-        position: { x: old_pos.x-100, y: old_pos.y+300 },
+        position: { x: old_pos.x-adder_x, y: old_pos.y+adder_y},
         data: newData
     };
 
