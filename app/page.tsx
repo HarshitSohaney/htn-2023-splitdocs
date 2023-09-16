@@ -7,8 +7,8 @@ import 'reactflow/dist/style.css';
 import EditorNode from '@/components/EditorNode';
 
 const initialNodes = [
-  { id: 'node-1', type: 'editor', position: { x: 0, y: 0 }, data: { block_id: 123 } },
-  { id: 'node-2', type: 'editor', position: { x: 100, y: 0 }, data: { block_id: 456 } },
+  { id: 'node-1', type: 'editor', position: { x: 0, y: 0 }, data: { block_id: 123, text: "Hello 1" } },
+  { id: 'node-2', type: 'editor', position: { x: 0, y: 0 }, data: { block_id: 456, text: "Hello 2" } },
 ];
 
 const nodeTypes = { editor: EditorNode };
@@ -41,7 +41,6 @@ export default function App() {
         nodeTypes={nodeTypes}
         panOnScroll={true}
         selectionOnDrag={true}
-        fitView
       >
         <Background />
         <Controls />
