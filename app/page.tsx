@@ -7,14 +7,15 @@ import 'reactflow/dist/style.css';
 import EditorNode from '@/components/EditorNode';
 
 const initialNodes = [
-  { id: 'node-1', type: 'editor', position: { x: 0, y: 0 }, data: { value: 123 } }, // Updated the type to 'editor'
+  { id: 'node-1', type: 'editor', position: { x: 0, y: 0 }, data: { block_id: 123 } },
+  { id: 'node-2', type: 'editor', position: { x: 100, y: 0 }, data: { block_id: 456 } },
 ];
 
 const nodeTypes = { editor: EditorNode };
 
 export default function App() {
-  const [nodes, setNodes] = useState<Node[]>(initialNodes); // Specify the type as Node[]
-  const [edges, setEdges] = useState<Edge[]>([]); // Specify the type as Edge[]
+  const [nodes, setNodes] = useState<Node[]>(initialNodes);
+  const [edges, setEdges] = useState<Edge[]>([]);
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -38,6 +39,8 @@ export default function App() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        panOnScroll={true}
+        selectionOnDrag={true}
         fitView
       >
         <Background />
