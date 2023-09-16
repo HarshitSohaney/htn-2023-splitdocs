@@ -53,7 +53,6 @@ export default function App() {
         nodeTypes={nodeTypes}
         panOnScroll={true}
         selectionOnDrag={true}
-        snapToGrid={true}
       >
         <MiniMap />
         <Background />
