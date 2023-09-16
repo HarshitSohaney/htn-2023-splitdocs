@@ -1,15 +1,26 @@
 'use client'
 
-import { useCallback, useState } from 'react';
-import ReactFlow, { Background, Controls, Connection, Node, Edge, EdgeChange, NodeChange, addEdge, applyEdgeChanges, applyNodeChanges } from 'reactflow';
+import { useCallback, useState, useRef, useContext } from 'react';
+import ReactFlow, { Background, Controls, 
+  Connection, Node, Edge, EdgeChange, 
+  NodeChange, addEdge, applyEdgeChanges, 
+  applyNodeChanges, useReactFlow, useNodesState
+  , useEdgesState } from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import EditorNode from '@/components/EditorNode';
 
+
 const initialNodes = [
-  { id: 'node-1', type: 'editor', position: { x: 0, y: 0 }, data: { block_id: 123, text: "Hello 1" } },
-  { id: 'node-2', type: 'editor', position: { x: 0, y: 0 }, data: { block_id: 456, text: "Hello 2" } },
+  { 
+    id: 'node-1', 
+    type: 'editor', 
+    position: { x: 0, y: 0 }, 
+    data: { label:'', block_id: 'block-1' },
+  },
 ];
+
+// create a dict for edges
 
 const nodeTypes = { editor: EditorNode };
 
@@ -29,6 +40,7 @@ export default function App() {
     (connection: Edge | Connection) => setEdges((eds) => addEdge(connection, eds)),
     [setEdges]
   );
+
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>

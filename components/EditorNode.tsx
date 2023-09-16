@@ -1,7 +1,7 @@
 'use client'
 
 import { Editor } from 'novel';
-import { useState } from 'react';
+import { useReactFlow, ReactFlowInstance } from "reactflow";
 
 type EditorNodeProps = {
   data: {
@@ -10,13 +10,28 @@ type EditorNodeProps = {
   };
 }
 
-const EditorNode = ({ data }: EditorNodeProps) => {
+const EditorNode = ({ id, data}: EditorNodeProps) => {
+  const reactFlowInstance = useReactFlow();
 
-  const [tags, setTags] = useState<string[]>([
-    'generational',
-    'visionary',
-    '10X',
-  ]);
+  const addNewNode = (id) => {
+    const nodes = reactFlowInstance.getNodes();
+    const edges = reactFlowInstance.getEdges();
+    
+    const oldData = reactFlowInstance.getNode(id);
+    const newData = { ...oldData.data };
+    const old_pos = oldData.position;
+
+    const newNode = {
+        id: `node-${nodes.length + 1}`,
+        type: 'editor',
+        position: { x: old_pos.x-100, y: old_pos.y+200 },
+        data: newData
+    };
+
+    reactFlowInstance.setNodes([...nodes, newNode]);
+    reactFlowInstance.setEdges([...edges, { id: `edge-${nodes.length + 1}`, source: id, target: newNode.id }]);
+
+  }
 
   return (
     <div>
@@ -39,6 +54,11 @@ const EditorNode = ({ data }: EditorNodeProps) => {
           ))}
         </div>
       </div>
+      
+        <div className="bg-black p-1 rounded-lg">
+            <button className="bg-white" onClick={() => addNewNode(id)}>Create Branch</button>
+        </div>
+
       {/* <Handle type="source" position={Position.Bottom} id="a" /> */}
       {/* <Handle type="source" position={Position.Bottom} id="b" style={handleStyle} /> */}
     </div>
