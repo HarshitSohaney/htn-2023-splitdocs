@@ -26,7 +26,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
     '10X',
   ]);
 
-  const { setNodes, setEdges, getNodes, getNode, getEdges, setViewport } = useReactFlow();
+  const { setNodes, setEdges, getNodes, getNode, getEdges, setViewport, getViewport } = useReactFlow();
 
   const generateBlock = () => {
 
@@ -86,11 +86,12 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
     setNodes([...nodes, newNode]);
     setEdges([...edges, { id: `edge-${nodes.length + 1}`, source: id, target: newNode.id }]);
 
+    console.log(x,y)
     jumpToBlock(x, y);
   }
 
   const jumpToBlock = useCallback((x: number, y: number) => {
-    setViewport({ x, y, zoom: 1 }, { duration: 800 });
+    setViewport({ x, y, zoom: getViewport().zoom }, { duration: 800 });
   }, [setViewport]);
 
   return (
