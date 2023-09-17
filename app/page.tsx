@@ -15,7 +15,8 @@ import EditorNode from '@/components/EditorNode';
 const initialNodes = [
   { 
     id: 'node-1', 
-    type: 'editor', 
+    type: 'editor',
+    dragHandle: '.drag-handle',
     position: { x: 0, y: 0 }, 
     data: { label:'', block_id: uuid() },
   },
@@ -53,6 +54,8 @@ export default function App() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         panOnScroll={true}
+        panOnDrag={false}
+        nodesDraggable={true}
         selectionOnDrag={true}
       >
         <MiniMap />

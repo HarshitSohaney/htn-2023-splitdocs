@@ -1,6 +1,5 @@
 'use client'
 
-import { Editor } from 'novel';
 import { useCallback, useState } from 'react';
 import { Handle, Position, useReactFlow } from "reactflow";
 
@@ -8,6 +7,7 @@ import { DocumentDuplicateIcon, DocumentPlusIcon } from '@heroicons/react/24/out
 import { SparklesIcon } from '@heroicons/react/20/solid';
 
 import {v4 as uuid} from 'uuid';
+import Tiptap from './Tiptap';
 
 type EditorNodeProps = {
   data: {
@@ -19,6 +19,9 @@ type EditorNodeProps = {
 const EditorNode = ({ id, data}: EditorNodeProps) => {
 
   console.log(id)
+
+  // const editor = useCurrentEditor();
+  // console.log(editor)
 
   const [tags, setTags] = useState<string[]>([
     'generational',
@@ -87,7 +90,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
     setEdges([...edges, { id: `edge-${nodes.length + 1}`, source: id, target: newNode.id }]);
 
     console.log(x,y)
-    jumpToBlock(x, y);
+    // jumpToBlock(x, y);
   }
 
   const jumpToBlock = useCallback((x: number, y: number) => {
@@ -95,17 +98,23 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
   }, [setViewport]);
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row max-w-[50%]">
       <div>
         <p>Block ID: {data.block_id}</p>
-        <div className="bg-black p-1 rounded-lg">
-          <Editor
+        <div className="flex gap-1 items-center justify-center bg-gray-200 h-4 drag-handle rounded-t-lg">
+          {[1,2,3].map((i) => (
+            <span className="rounded-full h-1 w-1 bg-gray-400"></span>
+          ))}
+        </div>
+        <div className="bg-black p-1 rounded-b-lg">
+          {/* <Editor
             defaultValue={data.text || 'Testing!'}
             className="bg-white"
             storageKey={data.block_id}
             completionApi='/api/completion'
             // onUpdate={}
-          />
+          /> */}
+          <Tiptap />
           <div>
             {tags.map((tag) => (
               <span
