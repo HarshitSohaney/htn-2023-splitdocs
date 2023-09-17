@@ -8,6 +8,7 @@ import ReactFlow, { Background, Controls,
   , useEdgesState, 
   MiniMap} from 'reactflow';
 import 'reactflow/dist/style.css';
+import {v4 as uuid} from 'uuid';
 
 import EditorNode from '@/components/EditorNode';
 
@@ -16,7 +17,7 @@ const initialNodes = [
     id: 'node-1', 
     type: 'editor', 
     position: { x: 0, y: 0 }, 
-    data: { label:'', block_id: 'block-1' },
+    data: { label:'', block_id: uuid() },
   },
 ];
 

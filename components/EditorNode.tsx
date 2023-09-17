@@ -1,11 +1,13 @@
 'use client'
 
 import { Editor } from 'novel';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Handle, Position, useReactFlow } from "reactflow";
 
 import { DocumentDuplicateIcon, DocumentPlusIcon } from '@heroicons/react/24/outline';
 import { SparklesIcon } from '@heroicons/react/20/solid';
+
+import {v4 as uuid} from 'uuid';
 
 type EditorNodeProps = {
   data: {
@@ -24,43 +26,84 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
     '10X',
   ]);
 
-  const reactFlowInstance = useReactFlow();
+  const { setNodes, setEdges, getNodes, getNode, getEdges, setViewport } = useReactFlow();
 
   const generateBlock = () => {
 
   }
 
   const addNewNode = (id: string, text?: string) => {
-    const nodes = reactFlowInstance.getNodes();
-    const edges = reactFlowInstance.getEdges();
+    const nodes = getNodes();
+    const edges = getEdges();
     
-    const oldData = reactFlowInstance.getNode(id);
-    const newData = { ...oldData.data, text };
+    const oldData = getNode(id);
+    if (!oldData) return;
+
+    const newData = { ...oldData.data, text, block_id: uuid() };
     const old_pos = oldData.position;
+
+    console.log("old pos: ", old_pos);
+
+    let adder_x = oldData?.width - oldData?.width / 5;
+    let adder_y = oldData?.height + 100;
+
+    console.log("nodes: ", nodes);
+    for(let i = 0; i < edges.length; i++) { 
+      const edge = edges[i];
+      if(edge.source == id) {
+        while(true) {
+          console.log("edge: ", edge);
+          const target = getNode(edge.target);
+
+          console.log("target: ", target);
+
+          if(target.position.x != old_pos.x-adder_x || target.position.y != old_pos.y+adder_y) {
+            break;
+          }
+          else if(target.position.x != old_pos.x+adder_x  || target.position.y != old_pos.y+adder_y) {
+            adder_x = -adder_x;
+            console.log("x: ", adder_x);
+            break;
+          }
+          
+          adder_x += 100;
+          adder_y += 200;
+        }
+      }
+    }
+    // add new node
+
+    const x = old_pos.x-adder_x;
+    const y = old_pos.y+adder_y;
 
     const newNode = {
         id: `node-${nodes.length + 1}`,
         type: 'editor',
-        position: { x: old_pos.x-100, y: old_pos.y+300 },
+        position: { x, y },
         data: newData
     };
 
-    reactFlowInstance.setNodes([...nodes, newNode]);
-    reactFlowInstance.setEdges([...edges, { id: `edge-${nodes.length + 1}`, source: id, target: newNode.id }]);
+    setNodes([...nodes, newNode]);
+    setEdges([...edges, { id: `edge-${nodes.length + 1}`, source: id, target: newNode.id }]);
 
+    jumpToBlock(x, y);
   }
+
+  const jumpToBlock = useCallback((x: number, y: number) => {
+    setViewport({ x, y, zoom: 1 }, { duration: 800 });
+  }, [setViewport]);
 
   return (
     <div className="flex flex-row">
       <div>
         <p>Block ID: {data.block_id}</p>
-        {/* <Handle type="target" position={Position.Top} /> */}
         <div className="bg-black p-1 rounded-lg">
           <Editor
             defaultValue={data.text || 'Testing!'}
             className="bg-white"
             storageKey={data.block_id}
             completionApi='/api/completion'
+            // onUpdate={}
           />
           <div>
             {tags.map((tag) => (
@@ -87,14 +130,14 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
       <Handle
         type="source"
         position={Position.Bottom}
-        id={`edge-${reactFlowInstance.getNodes().length-1}`}
+        id={`edge-${getNodes().length-1}`}
         style={{ bottom: 10, zIndex: -30 }}
         isConnectable={true}
       />
       <Handle
         type="target"
         position={Position.Top}
-        id={`edge-${reactFlowInstance.getNodes().length-1}`}
+        id={`edge-${getNodes().length-1}`}
         style={{ top: 40, zIndex: -30 }}
         isConnectable={true}
       />
