@@ -7,28 +7,16 @@ import * as Y from 'yjs'
 import { WebrtcProvider } from 'y-webrtc'
 
 // A new Y document
-const ydoc = new Y.Doc()
-// Registered with a WebRTC provider
-const provider = new WebrtcProvider('example-document', ydoc)
+// const ydoc = new Y.Doc()
+// // Registered with a WebRTC provider
+// const provider = new WebrtcProvider('example-document', ydoc)
 
 type TiptapProps = {
   text?: string;
+  editor: any;
 }
 
-const Tiptap = ({ text }: TiptapProps) => {
-  const editor = useEditor({
-    extensions: [
-      StarterKit.configure({
-        history: false,
-      }),
-      Collaboration.configure({
-        document: ydoc,
-      }),
-    ],
-    content: `<p>${text ?? 'Write something amazing here!'}</p>`,
-    
-  })
-
+const Tiptap = ({ text, editor }: TiptapProps) => {
   return (
     <EditorContent editor={editor} className='bg-white p-8' />
   )

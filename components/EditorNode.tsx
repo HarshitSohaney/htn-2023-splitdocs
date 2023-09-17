@@ -8,6 +8,8 @@ import { SparklesIcon } from '@heroicons/react/20/solid';
 
 import {v4 as uuid} from 'uuid';
 import Tiptap from './Tiptap';
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 
 type EditorNodeProps = {
   data: {
@@ -17,6 +19,19 @@ type EditorNodeProps = {
 }
 
 const EditorNode = ({ id, data}: EditorNodeProps) => {
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        // history: false,
+      }),
+      // Collaboration.configure({
+      //   document: ydoc,
+      // }),
+    ],
+    content: `<p>${data.text ?? 'Write something amazing here!'}</p>`,
+    
+  })
 
   console.log(id)
 
@@ -36,6 +51,8 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
   }
 
   const addNewNode = (id: string, text?: string) => {
+    console.log(text)
+
     const nodes = getNodes();
     const edges = getEdges();
     
@@ -87,10 +104,11 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
         data: newData
     };
 
+    console.log(newNode)
+
     setNodes([...nodes, newNode]);
     setEdges([...edges, { id: `edge-${nodes.length + 1}`, source: id, target: newNode.id }]);
 
-    console.log(x,y)
     // jumpToBlock(x, y);
   }
 
@@ -115,7 +133,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
             completionApi='/api/completion'
             // onUpdate={}
           /> */}
-          <Tiptap text={data.text} />
+          <Tiptap text={data.text} editor={editor} />
           <div>
             {tags.map((tag) => (
               <span
@@ -131,10 +149,10 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
 
       <div className="flex flex-col gap-2 p-1 rounded-lg">
         <span className='h-8 w-8 block'></span>
-        <button onClick={() => addNewNode(id)}>
+        <button onClick={() => addNewNode(id, editor?.getText() ?? 'No text.')}>
           <DocumentPlusIcon className="h-6 w-6" />
         </button>
-        <button onClick={() => addNewNode(id)}>
+        <button onClick={() => addNewNode(id, editor?.getText() ?? 'No text.')}>
           <SparklesIcon className="h-6 w-6" />
         </button>
       </div>
