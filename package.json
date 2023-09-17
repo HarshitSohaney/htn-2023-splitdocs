@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
+    "@tiptap/extension-collaboration": "^2.1.10",
     "@tiptap/pm": "^2.1.10",
     "@tiptap/react": "^2.1.10",
     "@tiptap/starter-kit": "^2.1.10",
@@ -25,7 +26,10 @@
     "reactflow": "^11.8.3",
     "reaflow": "^5.2.6",
     "typescript": "5.2.2",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "y-prosemirror": "^1.2.1",
+    "y-webrtc": "^10.2.5",
+    "yjs": "^13.6.7"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.4",

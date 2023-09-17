@@ -82,6 +82,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
     const newNode = {
         id: `node-${nodes.length + 1}`,
         type: 'editor',
+        dragHandle: '.drag-handle',
         position: { x, y },
         data: newData
     };
@@ -102,7 +103,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
       <div>
         <p>Block ID: {data.block_id}</p>
         <div className="flex gap-1 items-center justify-center bg-gray-200 h-4 drag-handle rounded-t-lg">
-          {[1,2,3].map((i) => (
+          {[1,2,3].map((_) => (
             <span className="rounded-full h-1 w-1 bg-gray-400"></span>
           ))}
         </div>
@@ -114,7 +115,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
             completionApi='/api/completion'
             // onUpdate={}
           /> */}
-          <Tiptap />
+          <Tiptap text={data.text} />
           <div>
             {tags.map((tag) => (
               <span

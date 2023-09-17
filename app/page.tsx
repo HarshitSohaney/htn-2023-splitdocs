@@ -56,7 +56,7 @@ export default function App() {
         panOnScroll={true}
         panOnDrag={false}
         nodesDraggable={true}
-        selectionOnDrag={true}
+        // selectionOnDrag={true}
       >
         <MiniMap />
         <Background />
