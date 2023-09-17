@@ -8,9 +8,18 @@ dependencies:
   '@heroicons/react':
     specifier: ^2.0.18
     version: 2.0.18(react@18.2.0)
+  '@hocuspocus/provider':
+    specifier: ^2.5.0
+    version: 2.5.0(y-protocols@1.0.5)(yjs@13.6.7)
   '@tiptap/extension-collaboration':
     specifier: ^2.1.10
     version: 2.1.10(@tiptap/core@2.1.10)(@tiptap/pm@2.1.10)(y-prosemirror@1.2.1)
+  '@tiptap/extension-color':
+    specifier: ^2.1.10
+    version: 2.1.10(@tiptap/core@2.1.10)(@tiptap/extension-text-style@2.1.10)
+  '@tiptap/extension-text-style':
+    specifier: ^2.1.10
+    version: 2.1.10(@tiptap/core@2.1.10)
   '@tiptap/pm':
     specifier: ^2.1.10
     version: 2.1.10
@@ -140,6 +149,29 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@hocuspocus/common@2.5.0:
+    resolution: {integrity: sha512-TpnQAb1Rtff1trwURFWaUEYZwqykaIGo6NNnMr6ZISdDZFWNHMAMUmy7dwJDS9ECnEtcjXhpPxXeLV+MVQXVnw==}
+    dependencies:
+      lib0: 0.2.85
+    dev: false
+
+  /@hocuspocus/provider@2.5.0(y-protocols@1.0.5)(yjs@13.6.7):
+    resolution: {integrity: sha512-Du/q0kcVhaSQiKPBha19f+mnFOl4sFybARRWsGp4JIoDG+Vt3r73ZqjalIJmp9h4mBr2tGtS5zK/oQ/Vrv5/Bw==}
+    peerDependencies:
+      y-protocols: ^1.0.5
+      yjs: ^13.6.4
+    dependencies:
+      '@hocuspocus/common': 2.5.0
+      '@lifeomic/attempt': 3.0.3
+      lib0: 0.2.85
+      ws: 7.5.9
+      y-protocols: 1.0.5
+      yjs: 13.6.7
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
   /@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}
     engines: {node: '>=6.0.0'}
@@ -167,6 +199,10 @@ packages:
 
   /@juggle/resize-observer@3.4.0:
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
+    dev: false
+
+  /@lifeomic/attempt@3.0.3:
+    resolution: {integrity: sha512-GlM2AbzrErd/TmLL3E8hAHmb5Q7VhDJp35vIbyPVA5Rz55LZuRr8pwL3qrwwkVNo05gMX1J44gURKb4MHQZo7w==}
     dev: false
 
   /@motionone/animation@10.15.1:
@@ -541,6 +577,16 @@ packages:
       y-prosemirror: 1.2.1(prosemirror-model@1.19.3)(prosemirror-state@1.4.3)(prosemirror-view@1.31.8)(y-protocols@1.0.5)(yjs@13.6.7)
     dev: false
 
+  /@tiptap/extension-color@2.1.10(@tiptap/core@2.1.10)(@tiptap/extension-text-style@2.1.10):
+    resolution: {integrity: sha512-ZBHi/4+bT3PbC/PtZFF6lc1QbnhUYBLRd4o6AHbtNqBFVcagbRUeiyxJg5xXQa/Ar9eR3NPkG0y5WY/kRxB9Bg==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/extension-text-style': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.1.10(@tiptap/pm@2.1.10)
+      '@tiptap/extension-text-style': 2.1.10(@tiptap/core@2.1.10)
+    dev: false
+
   /@tiptap/extension-document@2.1.10(@tiptap/core@2.1.10):
     resolution: {integrity: sha512-jNlNGQIGg471DvzhADaEoRINa3LNghowrBbKK9d5wGVnbKRykNEPwjCf8zNl+m5NBmCZl3lsdznlwBk5zyh5Bg==}
     peerDependencies:
@@ -650,6 +696,14 @@ packages:
 
   /@tiptap/extension-strike@2.1.10(@tiptap/core@2.1.10):
     resolution: {integrity: sha512-KW63lZLPFIir5AIeh2I7UK6Tx1O3jetD7JIPUzEqp1I1BfJlHGHVQxV8VXAmJl0hTOzjQBsHW42PmBxSC97NUg==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.1.10(@tiptap/pm@2.1.10)
+    dev: false
+
+  /@tiptap/extension-text-style@2.1.10(@tiptap/core@2.1.10):
+    resolution: {integrity: sha512-ptgCZQfpy/8aQHHzktVMMAy30uMvC0XkPbJPmD0nYJqt/m+3QFHHWiGyaKXmYhqyg/TjPvTTMHjcvTvk5k4Sug==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
     dependencies:
@@ -3306,7 +3360,6 @@ packages:
       utf-8-validate:
         optional: true
     dev: false
-    optional: true
 
   /y-prosemirror@1.2.1(prosemirror-model@1.19.3)(prosemirror-state@1.4.3)(prosemirror-view@1.31.8)(y-protocols@1.0.5)(yjs@13.6.7):
     resolution: {integrity: sha512-czMBfB1eL2awqmOSxQM8cS/fsUOGE6fjvyPLInrh4crPxFiw67wDpwIW+EGBYKRa04sYbS0ScGj7ZgvWuDrmBQ==}

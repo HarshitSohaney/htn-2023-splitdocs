@@ -18,7 +18,7 @@ type TiptapProps = {
 
 const Tiptap = ({ text, editor }: TiptapProps) => {
   return (
-    <EditorContent editor={editor} className='bg-white p-8' />
+    <EditorContent editor={editor} className='bg-white p-8 cursor-text' />
   )
 }
 

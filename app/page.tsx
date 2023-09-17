@@ -18,7 +18,7 @@ const initialNodes = [
     type: 'editor',
     dragHandle: '.drag-handle',
     position: { x: 0, y: 0 }, 
-    data: { label:'', block_id: uuid() },
+    data: { text: '<p>Write something amazing here!</p>', block_id: uuid() },
   },
 ];
 
@@ -54,7 +54,7 @@ export default function App() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         panOnScroll={true}
-        panOnDrag={false}
+        panOnDrag={true}
         nodesDraggable={true}
         // selectionOnDrag={true}
       >

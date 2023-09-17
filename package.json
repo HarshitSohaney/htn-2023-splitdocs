@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
+    "@hocuspocus/provider": "^2.5.0",
     "@tiptap/extension-collaboration": "^2.1.10",
+    "@tiptap/extension-color": "^2.1.10",
+    "@tiptap/extension-text-style": "^2.1.10",
     "@tiptap/pm": "^2.1.10",
     "@tiptap/react": "^2.1.10",
     "@tiptap/starter-kit": "^2.1.10",

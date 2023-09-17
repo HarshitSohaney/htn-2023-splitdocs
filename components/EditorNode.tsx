@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Handle, Position, useReactFlow } from "reactflow";
 
 import { DocumentDuplicateIcon, DocumentPlusIcon } from '@heroicons/react/24/outline';
@@ -10,30 +10,58 @@ import {v4 as uuid} from 'uuid';
 import Tiptap from './Tiptap';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import Color from '@tiptap/extension-color';
+import Paragraph from '@tiptap/extension-paragraph';
+import TextStyle from '@tiptap/extension-text-style';
+import Collaboration from '@tiptap/extension-collaboration'
+import { HocuspocusProvider } from '@hocuspocus/provider'
 
 type EditorNodeProps = {
+  id: string;
   data: {
     block_id: string;
     text: string;
   };
 }
 
-const EditorNode = ({ id, data}: EditorNodeProps) => {
+const EditorNode = ({ id, data}: EditorNodeProps) => {  
+  // const provider = new HocuspocusProvider({
+  //   url: 'ws://127.0.0.1:8082',
+  //   name: id,
+  // })
 
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        // history: false,
+        // history: false
       }),
+      Paragraph.extend({
+        addKeyboardShortcuts() {
+          return {
+            'Mod-Enter': () => {
+              const curr = this.editor.getHTML();
+              console.log('Triggering branch for -- ', id, ' -- copying text ', curr, ' and resetting to ', data.text);
+              this.editor.commands.setContent(data.text);
+              addNewNode(id, curr);
+            },
+          }
+        },
+      }),
+      Color.configure({
+        types: ['textStyle'],
+      }),
+      TextStyle,
       // Collaboration.configure({
-      //   document: ydoc,
+      //   document: provider.document,
       // }),
     ],
-    content: `<p>${data.text ?? 'Write something amazing here!'}</p>`,
+    content: data.text,
     
   })
 
-  console.log(id)
+  editor?.on('create', ({ editor }) => {
+    console.log('Created node -- ', id, ' -- with original text', editor.getHTML());
+  });
 
   // const editor = useCurrentEditor();
   // console.log(editor)
@@ -46,13 +74,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
 
   const { setNodes, setEdges, getNodes, getNode, getEdges, setViewport, getViewport } = useReactFlow();
 
-  const generateBlock = () => {
-
-  }
-
   const addNewNode = (id: string, text?: string) => {
-    console.log(text)
-
     const nodes = getNodes();
     const edges = getEdges();
     
@@ -117,9 +139,9 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
   }, [setViewport]);
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row cursor-pointer">
       <div>
-        <p>Block ID: {data.block_id}</p>
+        {/* <p>Block ID: {data.block_id}</p> */}
         <div className="flex gap-1 items-center justify-center bg-gray-200 h-4 drag-handle rounded-t-lg">
           {[1,2,3].map((_) => (
             <span className="rounded-full h-1 w-1 bg-gray-400"></span>
@@ -134,7 +156,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
             // onUpdate={}
           /> */}
           <Tiptap text={data.text} editor={editor} />
-          <div>
+          {/* <div>
             {tags.map((tag) => (
               <span
                 className="bg-gray-200 rounded-full px-2 py-1 text-xs font-bold mr-1 hover:bg-gray-300"
@@ -143,7 +165,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
                 {tag}
               </span>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 
