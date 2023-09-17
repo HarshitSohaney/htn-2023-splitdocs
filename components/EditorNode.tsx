@@ -98,7 +98,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
   }, [setViewport]);
 
   return (
-    <div className="flex flex-row max-w-[50%]">
+    <div className="flex flex-row">
       <div>
         <p>Block ID: {data.block_id}</p>
         <div className="flex gap-1 items-center justify-center bg-gray-200 h-4 drag-handle rounded-t-lg">
@@ -129,7 +129,7 @@ const EditorNode = ({ id, data}: EditorNodeProps) => {
       </div>
 
       <div className="flex flex-col gap-2 p-1 rounded-lg">
-        <span className='h-6 w-6 block'></span>
+        <span className='h-8 w-8 block'></span>
         <button onClick={() => addNewNode(id)}>
           <DocumentPlusIcon className="h-6 w-6" />
         </button>
